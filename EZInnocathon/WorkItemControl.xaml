@@ -1,0 +1,171 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EZInnocathon"
+             xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="EZInnocathon.WorkItemControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="180" d:DesignWidth="900"
+             x:Name="WorkItemUC">
+
+    <Grid>
+        <Grid.OpacityMask>
+            <VisualBrush Visual="{Binding ElementName=borda}" />
+        </Grid.OpacityMask>
+        <DockPanel LastChildFill="False" Margin="0 0 0 15">
+            
+            <Border Name="borda" Margin="10"
+            BorderBrush="#FFFFC7C7"
+            BorderThickness="9"
+            CornerRadius="10">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15" Direction="-45" RenderingBias="Quality" ShadowDepth="1" Color="#FF666666" Opacity="0.5"/>
+                </Border.Effect>
+
+                <DockPanel DockPanel.Dock="Top" LastChildFill="False" Background="#FFFFC7C7">
+
+                    <StackPanel Orientation="Vertical">
+                        <ComboBox Margin="10" x:Name="typeCB" Width="150" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="comboBox_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                            <ComboBoxItem Content="Folder" />
+                            <ComboBoxItem Content="File/Program"/>
+                            <ComboBoxItem Content="Website"/>
+                        </ComboBox>
+                        <ComboBox Margin="10" x:Name="windowStateCB" Width="150" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}" >
+                            <ComboBoxItem Content="Maximized"/>
+                            <ComboBoxItem Content="Minimized"/>
+                            <ComboBoxItem Content="Default"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <DockPanel DockPanel.Dock="Left">
+                                <TextBox x:Name="ItemPath" Text="" Margin="10" Width="400" Height="40" FontSize="24" FontFamily="Century Gothic" Foreground="#FF464444" Padding="4"/>
+                            </DockPanel>
+                            <DockPanel Margin="10" DockPanel.Dock="Left">
+                                <Button x:Name="browseButton" Height="40" Width="120" Background="#FFD8560C" BorderBrush="{x:Null}">
+                                    <TextBlock Text="Browse" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="white"/>
+                                </Button>
+                            </DockPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="resource\monitor.png" Stretch="Uniform" Width="30" Opacity="0.7"></Image>
+                            <ComboBox Margin="5 10" x:Name="monitorCB" Width="50" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                                <ComboBoxItem Content="#1"/>
+                                <ComboBoxItem Content="#2"/>
+                            </ComboBox>
+                            <ComboBox Margin="20 0 0 0" x:Name="dayScheduleCB" Width="140" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="dayScheduleCB_SelectionChanged" VerticalAlignment="Center"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                                <ComboBoxItem Content="Run at start"/>
+                                <ComboBoxItem Content="No schedule"/>
+                                <ComboBoxItem Content="--------------"/>
+                                <ComboBoxItem Content="Daily"/>
+                                <ComboBoxItem Content="Sundays"/>
+                                <ComboBoxItem Content="Mondays"/>
+                                <ComboBoxItem Content="Tuesdays"/>
+                                <ComboBoxItem Content="Wednesdays"/>
+                                <ComboBoxItem Content="Thursdays"/>
+                                <ComboBoxItem Content="Fridays"/>
+                                <ComboBoxItem Content="Saturdays"/>
+                            </ComboBox>
+                            <ComboBox Margin="0" x:Name="hourCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                                <ComboBoxItem Content="6"/>
+                                <ComboBoxItem Content="7"/>
+                                <ComboBoxItem Content="8"/>
+                                <ComboBoxItem Content="9"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="11"/>
+                                <ComboBoxItem Content="12"/>
+                            </ComboBox>
+                            <ComboBox Margin="0" x:Name="minuteCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                                <ComboBoxItem Content="00"/>
+                                <ComboBoxItem Content="01"/>
+                                <ComboBoxItem Content="02"/>
+                                <ComboBoxItem Content="03"/>
+                                <ComboBoxItem Content="04"/>
+                                <ComboBoxItem Content="05"/>
+                                <ComboBoxItem Content="06"/>
+                                <ComboBoxItem Content="07"/>
+                                <ComboBoxItem Content="08"/>
+                                <ComboBoxItem Content="09"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="11"/>
+                                <ComboBoxItem Content="12"/>
+                                <ComboBoxItem Content="13"/>
+                                <ComboBoxItem Content="14"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="16"/>
+                                <ComboBoxItem Content="17"/>
+                                <ComboBoxItem Content="18"/>
+                                <ComboBoxItem Content="19"/>
+                                <ComboBoxItem Content="20"/>
+                                <ComboBoxItem Content="21"/>
+                                <ComboBoxItem Content="22"/>
+                                <ComboBoxItem Content="23"/>
+                                <ComboBoxItem Content="24"/>
+                                <ComboBoxItem Content="25"/>
+                                <ComboBoxItem Content="26"/>
+                                <ComboBoxItem Content="27"/>
+                                <ComboBoxItem Content="28"/>
+                                <ComboBoxItem Content="29"/>
+                                <ComboBoxItem Content="30"/>
+                                <ComboBoxItem Content="31"/>
+                                <ComboBoxItem Content="32"/>
+                                <ComboBoxItem Content="33"/>
+                                <ComboBoxItem Content="34"/>
+                                <ComboBoxItem Content="35"/>
+                                <ComboBoxItem Content="36"/>
+                                <ComboBoxItem Content="37"/>
+                                <ComboBoxItem Content="38"/>
+                                <ComboBoxItem Content="39"/>
+                                <ComboBoxItem Content="40"/>
+                                <ComboBoxItem Content="41"/>
+                                <ComboBoxItem Content="42"/>
+                                <ComboBoxItem Content="43"/>
+                                <ComboBoxItem Content="44"/>
+                                <ComboBoxItem Content="45"/>
+                                <ComboBoxItem Content="46"/>
+                                <ComboBoxItem Content="47"/>
+                                <ComboBoxItem Content="48"/>
+                                <ComboBoxItem Content="49"/>
+                                <ComboBoxItem Content="50"/>
+                                <ComboBoxItem Content="51"/>
+                                <ComboBoxItem Content="52"/>
+                                <ComboBoxItem Content="53"/>
+                                <ComboBoxItem Content="54"/>
+                                <ComboBoxItem Content="55"/>
+                                <ComboBoxItem Content="56"/>
+                                <ComboBoxItem Content="57"/>
+                                <ComboBoxItem Content="58"/>
+                                <ComboBoxItem Content="59"/>
+                            </ComboBox>
+                            <ComboBox Margin="0" x:Name="ampmCB" Width="57" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                                <ComboBoxItem Content="AM"/>
+                                <ComboBoxItem Content="PM"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                    </StackPanel>
+                    <StackPanel Margin="20 10 0 0">
+                        <DockPanel DockPanel.Dock="Top">
+                            <Button x:Name="playButton" Height="50" Width="50" Background="{x:Null}" Click="playButton_Click">
+                                <Image Source="resource\play-button.png" Stretch="Uniform" Width="40" Opacity="1.0"/>
+                            </Button>
+                        </DockPanel>
+                        <DockPanel DockPanel.Dock="Top">
+                            <Button x:Name="removeButton" Margin="0 0 0 0" Height="40" Width="40" Background="{x:Null}" Click="removeButton_Click">
+                                <Image Source="resource\trashcan.png" Stretch="Uniform" Width="25" Opacity="0.9"/>
+                            </Button>
+                        </DockPanel>
+                    </StackPanel>
+
+                </DockPanel>
+            </Border>
+        </DockPanel>
+    </Grid>
+</UserControl>
