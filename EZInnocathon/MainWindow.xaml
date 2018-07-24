@@ -37,9 +37,9 @@
             <DockPanel Name="titleBar" Panel.ZIndex="5000" Height="40" VerticalAlignment="Top" DockPanel.Dock="Top" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
                 <DockPanel.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="1,0">
-                        <GradientStop Color="#FF97ADE8" Offset="1"/>
+                        <GradientStop Color="#FF5163B9" Offset="1"/>
                         <GradientStop Color="#FF6AADF0" Offset="0.51"/>
-                        <GradientStop Color="#FF3CFFF6" Offset="0.071"/>
+                        <GradientStop Color="#FF3C9DFF" Offset="0.071"/>
                     </LinearGradientBrush>
                 </DockPanel.Background>
                 <DockPanel>
@@ -208,7 +208,7 @@
             <!--header-->
 
 
-            <DockPanel Margin="40 10 10 10" DockPanel.Dock="Top" Height="630">
+            <DockPanel Margin="40 10 10 10" DockPanel.Dock="Top" Height="730">
                 <DockPanel  Margin="10" DockPanel.Dock="Top">
                     <TextBlock Name="Header" Text="  " FontSize="20" FontFamily="Century Gothic" Foreground="#FF464444" HorizontalAlignment="Left"></TextBlock>
                 </DockPanel>
