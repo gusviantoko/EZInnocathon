@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ezo_logo_shadow_Tzu_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
@@ -161,6 +164,29 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\monitor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\alarm-clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\paint-brush.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\cardAstri800.png" />
+    <Resource Include="Resource\cardEdo800.png" />
+    <Resource Include="Resource\cardEdokuning800.png" />
+    <Resource Include="Resource\cardVian.png" />
+    <Resource Include="Resource\ezo-logo-shadow-mono.png" />
+    <Resource Include="Resource\ezo-logo-shadow.png" />
+    <Resource Include="Resource\ezo-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\mitrais_teaser.jpg" />
+    <Resource Include="Resource\stark.jpg" />
+    <Resource Include="Resource\wayne.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ezo_logo_shadow_Tzu_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

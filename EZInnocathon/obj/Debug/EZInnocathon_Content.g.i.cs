@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/monitor.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ezo_logo_shadow_tzu_icon.ico")]
 
 

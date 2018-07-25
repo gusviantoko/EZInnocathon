@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EZInnocathon"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
-        Title="EZ Organize" Height="880" Width="1700" ResizeMode="NoResize" Background="#FFEE0808">
+        Title="EZ Organize" Height="920" Width="1540" ResizeMode="NoResize" Background="{x:Null}">
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
@@ -31,7 +31,8 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Margin="40 40 0 0">
+        <Image Source="resource\ezo-logo-shadow.png" Stretch="Uniform"  Width="250" Panel.ZIndex="2000" Margin="-29,-64,1279,0" Height="260" VerticalAlignment="Top"/>
 
         <DockPanel LastChildFill="true" Background="#FFD8D8D8">
             <DockPanel Name="titleBar" Panel.ZIndex="5000" Height="40" VerticalAlignment="Top" DockPanel.Dock="Top" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
@@ -43,7 +44,7 @@
                     </LinearGradientBrush>
                 </DockPanel.Background>
                 <DockPanel>
-                    <Button x:Name="miniButton" Foreground="#FF9B9B9B" Background="{x:Null}" Margin="1620, 0,0,0" Width="30.5" Height="Auto" VerticalAlignment="Center" Click="miniButton_Click">
+                    <Button x:Name="miniButton" Foreground="#FF9B9B9B" Background="{x:Null}" Margin="1420, 0,0,0" Width="30.5" Height="Auto" VerticalAlignment="Center" Click="miniButton_Click">
                         <Image Source="resource\minimize.png" Stretch="Uniform" Width="24" Opacity="0.7"/>
                     </Button>
                     <Button x:Name="exitButton" Foreground="#FF9B9B9B" Background="{x:Null}" Margin="5, 0,0,0" Width="30.5" Height="Auto" VerticalAlignment="Center" Click="exitButton_Click">
@@ -52,7 +53,9 @@
                 </DockPanel>
             </DockPanel>
             <DockPanel x:Name="sidePanel" DockPanel.Dock="Left" Width="250" LastChildFill="False" Background="#FF5163B9">
-                <DockPanel Height="300" DockPanel.Dock="Top" LastChildFill="False">
+                <DockPanel Height="130" DockPanel.Dock="Top" LastChildFill="False">
+                </DockPanel>
+                <DockPanel Height="160" DockPanel.Dock="Top" LastChildFill="False" Visibility="Collapsed">
                     <DockPanel Height="50" DockPanel.Dock="top"/>
                     <DockPanel DockPanel.Dock="top" Margin="58 0 0 0">
                         <TextBlock Name="dayText" Text="Wednesday" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" HorizontalAlignment="Left" Foreground="White"></TextBlock>
@@ -66,6 +69,21 @@
                         </DockPanel>
                     </StackPanel>
                 </DockPanel>
+                <TextBlock DockPanel.Dock="Top" Name="EZOrganizer" Text="EZ ORGANIZER" FontSize="25" VerticalAlignment="Top" FontFamily="Century Gothic" Foreground="White" Margin="0 0 0 0" HorizontalAlignment="Center"></TextBlock>
+
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <DockPanel Height="50" DockPanel.Dock="Top">
+                        <Image Source="resource\paint-brush.png" Margin="0 0 3 0" Stretch="Uniform" Width="25"></Image>
+                        <TextBlock Name="countNormalItem" Margin="5 0 20 0" Text="5" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
+                    </DockPanel>
+                    <TextBlock Text="|" FontSize="35" Foreground="#33FFFFFF" VerticalAlignment="Top"></TextBlock>
+                    <DockPanel Height="50" DockPanel.Dock="Top">
+                        <Image Source="resource\alarm-clock.png" Margin="20 0 3 0" Stretch="Uniform" Width="25"></Image>
+                        <TextBlock Name="countSchedItem" Margin="5 0 20 0" Text="3" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
+                    </DockPanel>
+                </StackPanel>
+                <DockPanel Height="100" DockPanel.Dock="Top"></DockPanel>
                 <Button x:Name="MainButton" DockPanel.Dock="Top" Foreground="#FFEAEAEA" Click="MainButton_Click">
                     <DockPanel DockPanel.Dock="Left">
                         <Image Source="resource\briefcase.png" Stretch="Uniform" Width="45" Opacity="0.9"/>
@@ -101,52 +119,46 @@
             </DockPanel>
 
         </DockPanel>
-        <DockPanel x:Name="aboutPanel" Background="#FFE2E2E2" Width="1450" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1001">
-            <DockPanel Margin="50 50 150 50" DockPanel.Dock="Top" Height="100">
-                <TextBlock Text="TEAM" FontFamily="Century Gothic" FontSize="70" HorizontalAlignment="Center" Foreground="#FF292929"/>
-            </DockPanel>
-            <DockPanel DockPanel.Dock="Top" Margin="50 0 140 0">
-                <!-- do something with this to fix vian pic position-->
-                <DockPanel Margin="100 0 0 0" DockPanel.Dock="Left"  LastChildFill="False">
-                    <Image Source="resource\pikachu-Love.jpg" Margin="50 50 50 15" Width="200" Height="200" DockPanel.Dock="Top"/>
-                    <TextBlock Margin="0 0 0 15" Text="Eduardo Pradana" FontFamily="Century Gothic" FontSize="27" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
-                    <DockPanel Margin="60 0 0 0" DockPanel.Dock="top"  LastChildFill="False">
-                        <Image Source="resource\instagram-logo.png" Margin="0 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
-                        <Image Source="resource\facebook-app-logo.png" Margin="20 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
-                        <Image Source="resource\linkedin-logo.png" Margin="20 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
+        <DockPanel x:Name="aboutPanel" Background="#FFE2E2E2" Width="1250" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1001">
+
+            <ScrollViewer DockPanel.Dock="Top">
+                <StackPanel>
+                    <DockPanel Margin="0 50 0 0" DockPanel.Dock="Top" Height="80">
+                        <TextBlock Text="SPONSORS" FontFamily="Century Gothic" FontSize="60" HorizontalAlignment="Center" Foreground="#FF292929"/>                        
                     </DockPanel>
-                </DockPanel>
-                <DockPanel Margin="100 0 0 0" DockPanel.Dock="Left"  LastChildFill="False">
-                    <Image Source="resource\pikachu-Love.jpg" Margin="50 50 50 15" Width="200" Height="200" DockPanel.Dock="Top"/>
-                    <TextBlock Margin="0 0 0 15" Text="Astri Kusumawardani" FontFamily="Century Gothic" FontSize="27" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
-                    <DockPanel Margin="60 0 0 0" DockPanel.Dock="top"  LastChildFill="False">
-                        <Image Source="resource\instagram-logo.png" Margin="0 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
-                        <Image Source="resource\facebook-app-logo.png" Margin="20 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
-                        <Image Source="resource\linkedin-logo.png" Margin="20 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
+                    <DockPanel DockPanel.Dock="Top">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Source="resource\stark.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="280"/>
+                            <Image Source="resource\mitrais_teaser.jpg" Margin="0 25 0 15" DockPanel.Dock="Top" Width="350"/>
+                            <Image Source="resource\wayne.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="280"/>
+                        </StackPanel>
                     </DockPanel>
-                </DockPanel>
-                <DockPanel Margin="100 0 0 0" DockPanel.Dock="Left"  LastChildFill="False">
-                    <Image Source="resource\pikachu-Love.jpg" Margin="50 50 50 15" Width="200" Height="200" DockPanel.Dock="Top"/>
-                    <TextBlock Margin="0 0 0 15" Text="Gusviantoko Purwanto" FontFamily="Century Gothic" FontSize="27" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
-                    <DockPanel Margin="60 0 0 0" DockPanel.Dock="top"  LastChildFill="False">
-                        <Image Source="resource\instagram-logo.png" Margin="0 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
-                        <Image Source="resource\facebook-app-logo.png" Margin="20 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
-                        <Image Source="resource\linkedin-logo.png" Margin="20 0 0 0" Stretch="None" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
+                    <DockPanel Margin="0 50 0 0" DockPanel.Dock="Top" Height="70">
+                        <TextBlock Text="THE CHEFS" FontFamily="Century Gothic" FontSize="60" HorizontalAlignment="Center" Foreground="#FF292929"/>
                     </DockPanel>
-                </DockPanel>
-            </DockPanel>
-            <DockPanel Margin="110 110 0 0" DockPanel.Dock="Top" Height="100">
-                <DockPanel DockPanel.Dock="Top">
-                    <TextBlock Margin="0 50 0 0" Text="Icons made by www.freepik.com from www.flaticon.com is licensed by Creative Commons BY 3.0 " FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="Left" Foreground="#FF292929"/>
-                </DockPanel>
-            </DockPanel>
+                    <DockPanel Margin="100 0 0 0" DockPanel.Dock="Left"  LastChildFill="False">
+                        <Image Source="resource\cardAstri800.png" DockPanel.Dock="Top" Width="800"/>
+                        <Image Source="resource\cardEdo800.png" DockPanel.Dock="Top" Width="800"/>
+                        <Image Source="resource\cardVian.png" DockPanel.Dock="Top" Width="800"/>
+                    </DockPanel>
+                    <DockPanel Margin="0 0 0 0" DockPanel.Dock="Top">
+                        <DockPanel DockPanel.Dock="Top">
+                            <TextBlock Text="RESOURCES" FontFamily="Century Gothic" FontSize="60" HorizontalAlignment="Center" Foreground="#FF292929"/>                            
+                        </DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Vertical" HorizontalAlignment="Center">
+                            <TextBlock Margin="0 50 0 90" Text="Icons made by www.freepik.com from www.flaticon.com is licensed by Creative Commons BY 3.0 " FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="Left" Foreground="#FF292929"/>
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+
         </DockPanel>
-        <DockPanel x:Name="helpPanel" Background="#FFE2E2E2" Width="1450" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000">
+        <DockPanel x:Name="helpPanel" Background="#FFE2E2E2" Width="1250" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000" d:IsHidden="True">
             <StackPanel DockPanel.Dock="Top">
-                <TextBlock Text="HELP TOPIC" FontFamily="Century Gothic" FontSize="70" HorizontalAlignment="Center" Foreground="#FF292929" Margin="10 30 10 30"/>
+                <TextBlock Text="HELP TOPIC" FontFamily="Century Gothic" FontSize="70" HorizontalAlignment="Center" Foreground="#FF292929" Margin="0 30 10 30"/>
             </StackPanel>
             <ScrollViewer>
-                <StackPanel Margin="30" Width="1360">
+                <StackPanel Margin="30" Width="1160">
                     <Expander Header=" What is EZ Manage?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
                         <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
@@ -172,7 +184,7 @@
             </ScrollViewer>
         </DockPanel>
 
-        <DockPanel x:Name="importPanel" Background="#FFE2E2E2" Width="1450" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1002" d:LayoutOverrides="Height">
+        <DockPanel x:Name="importPanel" Background="#FFE2E2E2" Width="1250" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1002" d:LayoutOverrides="Height" d:IsHidden="True">
             <DockPanel Margin="50 50 150 50" DockPanel.Dock="Top" Height="100">
                 <TextBlock Text="IMPORT" FontFamily="Century Gothic" FontSize="70" HorizontalAlignment="Center" Foreground="#FF292929"/>
             </DockPanel>
@@ -187,21 +199,21 @@
                     <TextBox x:Name="ImportTextBox" Margin="0 50 20 50" Text="  Select a file.." Width="500" Height="40" FontSize="24" FontFamily="Century Gothic" Foreground="#FF464444"/>
                 </DockPanel>
                 <DockPanel DockPanel.Dock="Left">
-                    <Button Name="browseButton" Height="40" Width="150">
-                        <TextBlock Text="Browse" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic"/>
+                    <Button Name="browseButton" Height="40" Width="150" Background="#FFD8560C">
+                        <TextBlock Text="Browse" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </Button>
                 </DockPanel>
             </DockPanel>
             <DockPanel Margin="0 0 90 0" DockPanel.Dock="Top">
-                <Button Name="importButton" Height="80" Width="250">
+                <Button Name="importButton" Height="80" Width="250" Background="#FFD8560C">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="resource\boxes.png" Stretch="Uniform" Width="40" Opacity="0.9" Margin="0 0 10 0"/>
-                        <TextBlock Text="Import Work Item" FontSize="22" VerticalAlignment="Center" FontFamily="Century Gothic"/>
+                        <TextBlock Text="Import Work Item" FontSize="22" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </StackPanel>
                 </Button>
             </DockPanel>
         </DockPanel>
-        <DockPanel x:Name="mainPanel" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1003" d:LayoutOverrides="Height">
+        <DockPanel x:Name="mainPanel" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1003" d:LayoutOverrides="Height" d:IsHidden="True">
             <DockPanel.Background>
                 <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
             </DockPanel.Background>
@@ -227,7 +239,7 @@
                         <TextBlock Text="Add New Item" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </StackPanel>
                 </Button>
-                <DockPanel Name="emptySpaceDockLOL" Width="440"></DockPanel>
+                <DockPanel Name="emptySpaceDockLOL" Width="240"></DockPanel>
                 <Button x:Name="saveButton" Margin="10" Height="70" Width="220" Background="#FFD8560C">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                         <Image Source="resource\saveicon.png" Stretch="Uniform" Width="20" Margin=" 0 0 15 0" Opacity="0.8"/>
