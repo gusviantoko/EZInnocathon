@@ -75,7 +75,7 @@
 
                     <DockPanel Height="50" DockPanel.Dock="Top">
                         <Image Source="resource\paint-brush.png" Margin="0 0 3 0" Stretch="Uniform" Width="25"></Image>
-                        <TextBlock Name="countNormalItem" Margin="5 0 20 0" Text="5" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
+                        <TextBlock Name="countNormalItem" Margin="5 0 20 0" Text="1" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
                     </DockPanel>
                     <TextBlock Text="|" FontSize="35" Foreground="#33FFFFFF" VerticalAlignment="Top"></TextBlock>
                     <DockPanel Height="50" DockPanel.Dock="Top">

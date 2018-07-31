@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace EZInnocathon
 {
@@ -43,8 +44,9 @@ namespace EZInnocathon
         public void removeButton_Click(object sender, RoutedEventArgs e)
         {        
             ((Panel)this.Parent).Children.Remove(this);
-            
-
+            //int countItem;
+            //int.TryParse(MainWindow.get, out countItem);
+            //countNormalItem.Text = (countItem + 1).ToString();
         }
 
         public void hideScheduleControl(int daySchedule)
@@ -72,19 +74,10 @@ namespace EZInnocathon
                     this.browseButton.IsEnabled = false;
                     this.browseButton.Opacity = 0.5;
                     break;
-                case "Folder":
+                default:
                     this.browseButton.IsEnabled = true;
                     this.browseButton.Opacity = 1.0;
                     break;
-                case "File":
-                    this.browseButton.IsEnabled = true;
-                    this.browseButton.Opacity = 1.0;
-                    break;
-                case "Program":
-                    this.browseButton.IsEnabled = true;
-                    this.browseButton.Opacity = 1.0;
-                    break;
-
             }
         }
 
@@ -129,7 +122,42 @@ namespace EZInnocathon
                 minuteCB.Visibility = Visibility.Visible;
             }
             
+        }
 
+        private void browseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedValue = ((ComboBoxItem)typeCB.SelectedItem).Content.ToString();
+            switch (selectedValue)
+            {
+                case null: break;
+                case "Folder":
+                    //System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
+                    OpenFileDialog folderBrowser = new OpenFileDialog();
+                    // Set validate names and check file exists to false otherwise windows will
+                    // not let you select "Folder Selection."
+                    folderBrowser.ValidateNames = false;
+                    folderBrowser.CheckFileExists = false;
+                    folderBrowser.CheckPathExists = true;
+                    // Always default to Folder Selection.
+                    folderBrowser.FileName = "EZO";
+                    Nullable<bool> resultFolder = folderBrowser.ShowDialog();
+
+                    if (resultFolder == true)
+                    {
+                        ItemPath.Text = System.IO.Path.GetDirectoryName(folderBrowser.FileName);
+                    }
+                    break;
+                default:
+                    OpenFileDialog dlg = new OpenFileDialog();
+                    Nullable<bool> result = dlg.ShowDialog();
+
+                    if (result == true)
+                    {
+                        ItemPath.Text = dlg.FileName;
+                    } 
+                    break;
+            }
+            
         }
     }
 }
