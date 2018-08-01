@@ -8,7 +8,49 @@
              mc:Ignorable="d" 
              d:DesignHeight="180" d:DesignWidth="900"
              x:Name="WorkItemUC">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="BrowseButtons">
+            <Setter Property="Background" Value="#FFD8560C"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFFF4E27"/>
+                </Trigger>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <SoundPlayerAction Source="resource/crit.wav" />
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
 
+        <Style TargetType="{x:Type Button}" x:Key="DeleteButtons">
+            <Setter Property="Opacity" Value="0.7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <SoundPlayerAction Source="resource/low.wav" />
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.OpacityMask>
             <VisualBrush Visual="{Binding ElementName=borda}" />
@@ -44,7 +86,7 @@
                                 <TextBox x:Name="ItemPath" Text="" Margin="10" Width="400" Height="40" FontSize="24" FontFamily="Century Gothic" Foreground="#FF464444" Padding="4"/>
                             </DockPanel>
                             <DockPanel Margin="10" DockPanel.Dock="Left">
-                                <Button x:Name="browseButton" Height="40" Width="120" Background="#FFD8560C" BorderBrush="{x:Null}" Click="browseButton_Click">
+                                    <Button x:Name="browseButton" Height="40" Width="120" Background="#FFD8560C" BorderBrush="{x:Null}" Click="browseButton_Click"  Style="{DynamicResource BrowseButtons}">
                                     <TextBlock Text="Browse" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="white"/>
                                 </Button>
                             </DockPanel>
@@ -158,7 +200,7 @@
                             </Button>
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Top">
-                            <Button x:Name="removeButton" Margin="0 0 0 0" Height="40" Width="40" Background="{x:Null}" Click="removeButton_Click">
+                            <Button x:Name="removeButton" Margin="0 0 0 0" Height="40" Width="40" Background="{x:Null}" Click="removeButton_Click"  Style="{DynamicResource DeleteButtons}">
                                 <Image Source="resource\trashcan.png" Stretch="Uniform" Width="25" Opacity="0.9"/>
                             </Button>
                         </DockPanel>
