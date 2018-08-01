@@ -6,9 +6,29 @@
         xmlns:local="clr-namespace:EZInnocathon"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
-        Title="EZ Organize" Height="920" Width="1540" ResizeMode="NoResize" Background="{x:Null}">
+        Title="EZ Organize" Height="920" Width="1290" ResizeMode="NoResize" Background="{x:Null}">
 
     <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="BottomButtons">
+            <Setter Property="Background" Value="#FFD8560C"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFFF4E27"/>
+                </Trigger>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <SoundPlayerAction Source="resource/crit.wav" />
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="Foreground" Value="#FFD2D3FD"/>
@@ -25,15 +45,17 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF12336C"/>
+                    <Setter Property="Background" Value="#FF153A7A"/>
                 </Trigger>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <SoundPlayerAction Source="resource/speech.wav" />
+                </EventTrigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
-
     <Grid Margin="40 40 0 0">
-        <Image Source="resource\ezo-logo-shadow.png" Stretch="Uniform"  Width="250" Panel.ZIndex="2000" Margin="-29,-64,1279,0" Height="260" VerticalAlignment="Top"/>
-
+        <Image Source="resource\ezo-logo-shadow.png" Stretch="Uniform"  Width="250" Panel.ZIndex="5000" Margin="-31,-66,1031,0" Height="260" VerticalAlignment="Top"/>
+        <MediaElement Name="buttonSound" Volume="1"></MediaElement>
         <DockPanel LastChildFill="true" Background="#FFD8D8D8">
             <DockPanel Name="titleBar" Panel.ZIndex="5000" Height="40" VerticalAlignment="Top" DockPanel.Dock="Top" MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
                 <DockPanel.Background>
@@ -44,7 +66,7 @@
                     </LinearGradientBrush>
                 </DockPanel.Background>
                 <DockPanel>
-                    <Button x:Name="miniButton" Foreground="#FF9B9B9B" Background="{x:Null}" Margin="1420, 0,0,0" Width="30.5" Height="Auto" VerticalAlignment="Center" Click="miniButton_Click">
+                    <Button x:Name="miniButton" Foreground="#FF9B9B9B" Background="{x:Null}" Margin="1170, 0,0,0" Width="30.5" Height="Auto" VerticalAlignment="Center" Click="miniButton_Click">
                         <Image Source="resource\minimize.png" Stretch="Uniform" Width="24" Opacity="0.7"/>
                     </Button>
                     <Button x:Name="exitButton" Foreground="#FF9B9B9B" Background="{x:Null}" Margin="5, 0,0,0" Width="30.5" Height="Auto" VerticalAlignment="Center" Click="exitButton_Click">
@@ -84,7 +106,7 @@
                     </DockPanel>
                 </StackPanel>
                 <DockPanel Height="100" DockPanel.Dock="Top"></DockPanel>
-                <Button x:Name="MainButton" DockPanel.Dock="Top" Foreground="#FFEAEAEA" Click="MainButton_Click">
+                <Button x:Name="MainButton" DockPanel.Dock="Top" Foreground="#FFEAEAEA" Click="MainButton_Click">                    
                     <DockPanel DockPanel.Dock="Left">
                         <Image Source="resource\briefcase.png" Stretch="Uniform" Width="45" Opacity="0.9"/>
                         <TextBlock Text="    Work Item" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic"/>
@@ -110,17 +132,14 @@
                 </Button>
             </DockPanel>
             <DockPanel x:Name="topStripPanel" DockPanel.Dock="Top" Height="20">
-                <DockPanel.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF230606" Offset="0"/>
-                        <GradientStop Color="#FFA82222" Offset="1"/>
-                    </LinearGradientBrush>
-                </DockPanel.Background>
+                
             </DockPanel>
 
         </DockPanel>
-        <DockPanel x:Name="aboutPanel" Background="#FFE2E2E2" Width="1250" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1001">
-
+        <DockPanel x:Name="aboutPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1001" d:IsHidden="True">
+            <DockPanel.Background>
+                <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+            </DockPanel.Background>
             <ScrollViewer DockPanel.Dock="Top">
                 <StackPanel>
                     <DockPanel Margin="0 50 0 0" DockPanel.Dock="Top" Height="80">
@@ -128,18 +147,18 @@
                     </DockPanel>
                     <DockPanel DockPanel.Dock="Top">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image Source="resource\stark.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="280"/>
-                            <Image Source="resource\mitrais_teaser.jpg" Margin="0 25 0 15" DockPanel.Dock="Top" Width="350"/>
-                            <Image Source="resource\wayne.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="280"/>
+                            <Image Source="resource\stark.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="220"/>
+                            <Image Source="resource\mitrais_teaser.jpg" Margin="0 25 0 15" DockPanel.Dock="Top" Width="300"/>
+                            <Image Source="resource\wayne.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="220"/>
                         </StackPanel>
                     </DockPanel>
                     <DockPanel Margin="0 50 0 0" DockPanel.Dock="Top" Height="70">
                         <TextBlock Text="THE CHEFS" FontFamily="Century Gothic" FontSize="60" HorizontalAlignment="Center" Foreground="#FF292929"/>
                     </DockPanel>
                     <DockPanel Margin="100 0 0 0" DockPanel.Dock="Left"  LastChildFill="False">
-                        <Image Source="resource\cardAstri800.png" DockPanel.Dock="Top" Width="800"/>
-                        <Image Source="resource\cardEdo800.png" DockPanel.Dock="Top" Width="800"/>
-                        <Image Source="resource\cardVian.png" DockPanel.Dock="Top" Width="800"/>
+                        <Image Source="resource\cardVian.png" DockPanel.Dock="Top" Width="600"/>
+                        <Image Source="resource\cardAstri800.png" DockPanel.Dock="Top" Width="600"/>
+                        <Image Source="resource\cardEdo800.png" DockPanel.Dock="Top" Width="600"/>
                     </DockPanel>
                     <DockPanel Margin="0 0 0 0" DockPanel.Dock="Top">
                         <DockPanel DockPanel.Dock="Top">
@@ -153,40 +172,45 @@
             </ScrollViewer>
 
         </DockPanel>
-        <DockPanel x:Name="helpPanel" Background="#FFE2E2E2" Width="1250" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000" d:IsHidden="True">
-            <StackPanel DockPanel.Dock="Top">
-                <TextBlock Text="HELP TOPIC" FontFamily="Century Gothic" FontSize="70" HorizontalAlignment="Center" Foreground="#FF292929" Margin="0 30 10 30"/>
-            </StackPanel>
+        <DockPanel x:Name="helpPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000">
+            <DockPanel.Background>
+                <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+            </DockPanel.Background>
             <ScrollViewer>
-                <StackPanel Margin="30" Width="1160">
-                    <Expander Header=" What is EZ Manage?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                <StackPanel Margin="30" Width="920">
+                    <TextBlock Text="HELP TOPIC" FontFamily="Century Gothic" FontSize="60" HorizontalAlignment="Center" Foreground="#FF292929" Margin="0 30 10 30"/>
+
+                    <Expander Header=" What is EZ Organizer?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
+                        <TextBlock Text="EZ Organizer (EZO) is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
                     <Expander Header=" Is it free?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                        <TextBlock Text="EZ Organizer is free for a certain functionality, without any time limitation. To get all functionality, please purchase the full version of EZO." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
                     <Expander Header=" What do I get from full version?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                        <TextBlock Text="You will be able to set up more than 4 work items, you can also download a shortcut file that would enable you to open all work item that have been set up whenever you want without opening EZO. Please send an enquiry to hi@ezorganizer.com or visit our website www.ezorganizer.com. our team will guide you with the procedure." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
-                    <Expander Header=" How do i purchase the full version?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                    <Expander Header=" How do sponsor EZO?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
+                        <TextBlock Text="By sponsoring EZO, your company logo will be displayed in EZO Credit page and also on our website. Please send an enquiry to hi@ezorganizer.com or visit our website www.ezorganizer.com. our team will guide you with the procedure." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
                     <Expander Header=" How do I import the saved file?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                        <TextBlock Text="Simply click Save a Copy button in Work Item menu. this acts like a configuration file that saves all your work items. you can load up this configuration file back to any EZO via Import menu." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
                     <Expander Header="Where does the shortcut created?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                        <TextBlock Text="The shortcut will be put in your desktop folder with name EZOrganizer.bat. you can click the shortcut to open all your work items. please note that only non-scheduled item can be process by the shortcut. " FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
-                    <Expander Header="What files can be run by EZ Manage?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="EZ Prepare is a desktop application that helps you prepare the essential work item you need everytime you need it in a very easy way. Whether you are programmers, designers, architects, stock traders, whatever you do, as long as you work with a computer, EZ Prepare can help you." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                    <Expander Header="What files can be run by EZ Organizer?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
+                        <TextBlock Text="You can open basically any file, as long there is program installed in your machine to handle the file. You can also open folder, network locations, website, and programs. You can even open program with special parameters that come with it." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
                 </StackPanel>
             </ScrollViewer>
         </DockPanel>
 
-        <DockPanel x:Name="importPanel" Background="#FFE2E2E2" Width="1250" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1002" d:LayoutOverrides="Height" d:IsHidden="True">
-            <DockPanel Margin="50 50 150 50" DockPanel.Dock="Top" Height="100">
-                <TextBlock Text="IMPORT" FontFamily="Century Gothic" FontSize="70" HorizontalAlignment="Center" Foreground="#FF292929"/>
+        <DockPanel x:Name="importPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1002" d:LayoutOverrides="Height" d:IsHidden="True">
+            <DockPanel.Background>
+                <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
+            </DockPanel.Background>
+            <DockPanel Margin="50 50 150 50" DockPanel.Dock="Top" Height="100" d:IsHidden="True">
+                <TextBlock Text="IMPORT" FontFamily="Century Gothic" FontSize="60" HorizontalAlignment="Center" Foreground="#FF292929"/>
             </DockPanel>
             <DockPanel DockPanel.Dock="Top">
                 <TextBlock Margin="50 0 150 0" Text="Import a saved configuration file for EZ Manage" FontFamily="Century Gothic" FontSize="25" HorizontalAlignment="Center" Foreground="#FF292929"/>
@@ -233,26 +257,26 @@
             </DockPanel>
 
             <DockPanel Margin="0 0 40 0" DockPanel.Dock="Bottom" LastChildFill="False" HorizontalAlignment="Right">
-                <Button x:Name="addItemButton" Margin="10" Height="70" Width="200" Click="addItemButton_Click" Background="#FFD8560C">
+                <Button x:Name="addItemButton" Margin="10" Height="70" Width="200" Click="addItemButton_Click" Style="{DynamicResource BottomButtons}">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                         <Image Source="resource\plus.png" Stretch="Uniform" Width="20" Margin=" 0 0 15 0"/>
                         <TextBlock Text="Add New Item" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </StackPanel>
                 </Button>
-                <DockPanel Name="emptySpaceDockLOL" Width="240"></DockPanel>
-                <Button x:Name="saveButton" Margin="10" Height="70" Width="220" Background="#FFD8560C">
+                <DockPanel Name="emptySpaceDockLOL" Width="0"></DockPanel>
+                <Button x:Name="saveButton" Margin="10" Height="70" Width="220" Style="{DynamicResource BottomButtons}">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                         <Image Source="resource\saveicon.png" Stretch="Uniform" Width="20" Margin=" 0 0 15 0" Opacity="0.8"/>
                         <TextBlock Text="Save a Copy" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="shortcutButton" Margin="10" Height="70" Width="220" Background="#FFD8560C" Click="shortcutButton_Click">
+                <Button x:Name="shortcutButton" Margin="10" Height="70" Width="220" Click="shortcutButton_Click" Style="{DynamicResource BottomButtons}">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                         <Image Source="resource\writing.png" Stretch="Uniform" Width="30" Margin=" 0 0 15 0" Opacity="0.8"/>
                         <TextBlock Text="Create Shortcut" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="runAllButton" Margin="10" Height="70" Width="220" Background="#FFD8560C" Click="runAllButton_Click">
+                <Button x:Name="runAllButton" Margin="10" Height="70" Width="220" Click="runAllButton_Click" Style="{DynamicResource BottomButtons}">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                         <Image Source="resource\rocket.png" Stretch="Uniform" Width="30" Margin=" 0 0 15 0" Opacity="0.8"/>
                         <TextBlock Text="Run Work Items" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>

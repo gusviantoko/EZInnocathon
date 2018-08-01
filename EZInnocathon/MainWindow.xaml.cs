@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Media;
 
 namespace EZInnocathon
 {
@@ -107,7 +108,7 @@ namespace EZInnocathon
 
         public void WriteShortcut()
         {
-            string path= Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\EZOrganize.bat";
+            string path= Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\EZOrganizer.bat";
             try
             {
                 string buildShortcut;
@@ -158,8 +159,7 @@ namespace EZInnocathon
         {
             this.WindowState = WindowState.Minimized;
 
-        }
-
-
+        }        
     }
+
 }
