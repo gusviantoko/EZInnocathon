@@ -44,6 +44,17 @@ namespace EZInnocathon
         public void removeButton_Click(object sender, RoutedEventArgs e)
         {        
             ((Panel)this.Parent).Children.Remove(this);
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(MainWindow))
+                {
+                    int countItem;
+                    int.TryParse((window as MainWindow).countNormalItem.Text, out countItem);
+
+                    (window as MainWindow).countNormalItem.Text = (countItem - 1).ToString();
+                }
+            }
+
             //int countItem;
             //int.TryParse(MainWindow.get, out countItem);
             //countNormalItem.Text = (countItem + 1).ToString();

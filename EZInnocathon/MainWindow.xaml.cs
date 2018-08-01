@@ -31,12 +31,7 @@ namespace EZInnocathon
             getCal();
             addWorkItem();            
         }
-
-        public string GetCountNormalItem()
-        {
-            return countNormalItem.Text;
-        }
-
+        
         private void getCal()
         {
             dayText.Text = DateTime.Today.DayOfWeek.ToString();
