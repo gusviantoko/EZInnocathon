@@ -32,7 +32,6 @@ namespace EZInnocathon
             getCal();
             addWorkItem();            
         }
-
         private void getCal()
         {
             dayText.Text = DateTime.Today.DayOfWeek.ToString();

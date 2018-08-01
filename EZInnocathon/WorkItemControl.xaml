@@ -88,6 +88,8 @@
                             <DockPanel Margin="10" DockPanel.Dock="Left">
                                 <Button x:Name="browseButton" Height="40" Width="120" BorderBrush="{x:Null}" Style="{DynamicResource BrowseButtons}">
                                     <TextBlock Text="Browse" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="white"/>
+                                <Button x:Name="browseButton" Height="40" Width="120" Background="#FFD8560C" BorderBrush="{x:Null}" Click="browseButton_Click">
+                                    <TextBlock Text="Browse" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="white"/>
                                 </Button>
                             </DockPanel>
                         </StackPanel>
