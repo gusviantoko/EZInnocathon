@@ -44,7 +44,7 @@
                                 <TextBox x:Name="ItemPath" Text="" Margin="10" Width="400" Height="40" FontSize="24" FontFamily="Century Gothic" Foreground="#FF464444" Padding="4"/>
                             </DockPanel>
                             <DockPanel Margin="10" DockPanel.Dock="Left">
-                                <Button x:Name="browseButton" Height="40" Width="120" Background="#FFD8560C" BorderBrush="{x:Null}">
+                                <Button x:Name="browseButton" Height="40" Width="120" Background="#FFD8560C" BorderBrush="{x:Null}" Click="browseButton_Click">
                                     <TextBlock Text="Browse" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="white"/>
                                 </Button>
                             </DockPanel>

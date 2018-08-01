@@ -31,7 +31,7 @@ namespace EZInnocathon
             getCal();
             addWorkItem();            
         }
-
+        
         private void getCal()
         {
             dayText.Text = DateTime.Today.DayOfWeek.ToString();
@@ -75,6 +75,9 @@ namespace EZInnocathon
         private void addItemButton_Click(object sender, RoutedEventArgs e)
         {
             addWorkItem();
+            int countItem;
+            int.TryParse(countNormalItem.Text, out countItem);
+            countNormalItem.Text = (countItem + 1).ToString();
         }
    
 
