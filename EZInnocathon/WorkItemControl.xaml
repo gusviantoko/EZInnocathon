@@ -32,9 +32,9 @@
                             <ComboBoxItem Content="Website"/>
                         </ComboBox>
                         <ComboBox Margin="10" x:Name="windowStateCB" Width="150" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}" >
-                            <ComboBoxItem Content="Default"/>
                             <ComboBoxItem Content="Maximized"/>
                             <ComboBoxItem Content="Minimized"/>
+                            <ComboBoxItem Content="Default"/>
                         </ComboBox>
                     </StackPanel>
 

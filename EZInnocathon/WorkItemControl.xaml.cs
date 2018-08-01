@@ -54,10 +54,7 @@ namespace EZInnocathon
                     (window as MainWindow).countNormalItem.Text = (countItem - 1).ToString();
                 }
             }
-
-            //int countItem;
-            //int.TryParse(MainWindow.get, out countItem);
-            //countNormalItem.Text = (countItem + 1).ToString();
+            
         }
 
         public void hideScheduleControl(int daySchedule)
@@ -142,10 +139,9 @@ namespace EZInnocathon
             {
                 case null: break;
                 case "Folder":
-                    //System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
                     OpenFileDialog folderBrowser = new OpenFileDialog();
                     // Set validate names and check file exists to false otherwise windows will
-                    // not let you select "Folder Selection."
+                    // not let you select "EZO"
                     folderBrowser.ValidateNames = false;
                     folderBrowser.CheckFileExists = false;
                     folderBrowser.CheckPathExists = true;
