@@ -72,8 +72,9 @@ namespace EZInnocathon
                 minuteCB.Visibility = Visibility.Visible;
             }
         }
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void typeCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ItemPath.Text = "";
             var selectedValue = ((ComboBoxItem)typeCB.SelectedItem).Content.ToString();
             switch (selectedValue)
             {

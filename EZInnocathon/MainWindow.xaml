@@ -223,13 +223,13 @@
                     <TextBox x:Name="ImportTextBox" Margin="0 50 20 50" Text="  Select a file.." Width="500" Height="40" FontSize="24" FontFamily="Century Gothic" Foreground="#FF464444"/>
                 </DockPanel>
                 <DockPanel DockPanel.Dock="Left">
-                    <Button Name="browseButton" Height="40" Width="150" Background="#FFD8560C">
+                    <Button Name="browseButton" Height="40" Width="150" Background="#FFD8560C" Click="browseButton_Click">
                         <TextBlock Text="Browse" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </Button>
                 </DockPanel>
             </DockPanel>
             <DockPanel Margin="0 0 90 0" DockPanel.Dock="Top">
-                <Button Name="importButton" Height="80" Width="250" Background="#FFD8560C">
+                <Button Name="importButton" Height="80" Width="250" Background="#FFD8560C" Click="importActionButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="resource\boxes.png" Stretch="Uniform" Width="40" Opacity="0.9" Margin="0 0 10 0"/>
                         <TextBlock Text="Import Work Item" FontSize="22" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
@@ -264,7 +264,7 @@
                     </StackPanel>
                 </Button>
                 <DockPanel Name="emptySpaceDockLOL" Width="0"></DockPanel>
-                <Button x:Name="saveButton" Margin="10" Height="70" Width="220" Style="{DynamicResource BottomButtons}">
+                <Button x:Name="saveButton" Margin="10" Height="70" Width="220" Click="saveButton_Click" Style="{DynamicResource BottomButtons}">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                         <Image Source="resource\saveicon.png" Stretch="Uniform" Width="20" Margin=" 0 0 15 0" Opacity="0.8"/>
                         <TextBlock Text="Save a Copy" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
