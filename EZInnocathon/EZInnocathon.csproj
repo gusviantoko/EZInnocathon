@@ -189,15 +189,17 @@
     <Resource Include="ezo_logo_shadow_Tzu_icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\Resource\crit.wav" />
     <Content Include="Resource\buttonsound %281%29.wav" />
     <Content Include="Resource\buttonsound.wav" />
     <Content Include="Resource\chimes.wav" />
-    <Content Include="Resource\crit.wav" />
+    <Resource Include="Resource\crit.wav" />
     <Content Include="Resource\ir_begin.wav" />
-    <Content Include="Resource\low.wav" />
+    <Resource Include="Resource\low.wav" />
     <Content Include="Resource\nudge.wav" />
-    <Content Include="Resource\speech.wav" />
+    <Resource Include="Resource\speech.wav" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

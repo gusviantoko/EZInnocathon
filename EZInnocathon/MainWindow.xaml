@@ -20,13 +20,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="PreviewMouseDown"  Handler="playSoundBottomButtons"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FFFF4E27"/>
-                </Trigger>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <SoundPlayerAction Source="resource/crit.wav" />
-                </EventTrigger>
+                </Trigger>                
             </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type Button}">
@@ -43,13 +41,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="PreviewMouseDown"  Handler="playSoundNormalButtons"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FF153A7A"/>
                 </Trigger>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <SoundPlayerAction Source="resource/speech.wav" />
-                </EventTrigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
@@ -172,7 +168,7 @@
             </ScrollViewer>
 
         </DockPanel>
-        <DockPanel x:Name="helpPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000">
+        <DockPanel x:Name="helpPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000" d:IsHidden="True">
             <DockPanel.Background>
                 <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
             </DockPanel.Background>
@@ -237,7 +233,7 @@
                 </Button>
             </DockPanel>
         </DockPanel>
-        <DockPanel x:Name="mainPanel" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1003" d:LayoutOverrides="Height" d:IsHidden="True">
+        <DockPanel x:Name="mainPanel" LastChildFill="False" Margin="250,40,0,0" Panel.ZIndex="1003" d:LayoutOverrides="Height">
             <DockPanel.Background>
                 <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
             </DockPanel.Background>

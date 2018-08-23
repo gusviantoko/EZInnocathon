@@ -20,13 +20,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="PreviewMouseDown"  Handler="playSoundBrowseButtons"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FFFF4E27"/>
                 </Trigger>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <SoundPlayerAction Source="resource/crit.wav" />
-                </EventTrigger>
             </Style.Triggers>
         </Style>
 
@@ -41,13 +39,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="PreviewMouseDown"  Handler="playSoundDeleteButtons"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Opacity" Value="1"/>
                 </Trigger>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <SoundPlayerAction Source="resource/low.wav" />
-                </EventTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
@@ -101,16 +97,16 @@
                                 <ComboBoxItem Content="Run at start"/>
                                 <ComboBoxItem Content="No schedule"/>
                                 <ComboBoxItem Content="--------------"/>
-                                <ComboBoxItem Content="Daily"/>
-                                <ComboBoxItem Content="Sundays"/>
+                                <ComboBoxItem Content="Daily"/>                                
                                 <ComboBoxItem Content="Mondays"/>
                                 <ComboBoxItem Content="Tuesdays"/>
                                 <ComboBoxItem Content="Wednesdays"/>
                                 <ComboBoxItem Content="Thursdays"/>
                                 <ComboBoxItem Content="Fridays"/>
                                 <ComboBoxItem Content="Saturdays"/>
+                                <ComboBoxItem Content="Sundays"/>
                             </ComboBox>
-                            <ComboBox Margin="0" x:Name="hourCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                            <ComboBox Margin="0" x:Name="hourCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="hourCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
                                 <ComboBoxItem Content="1"/>
                                 <ComboBoxItem Content="2"/>
                                 <ComboBoxItem Content="3"/>
@@ -124,7 +120,7 @@
                                 <ComboBoxItem Content="11"/>
                                 <ComboBoxItem Content="12"/>
                             </ComboBox>
-                            <ComboBox Margin="0" x:Name="minuteCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                            <ComboBox Margin="0" x:Name="minuteCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="minuteCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
                                 <ComboBoxItem Content="00"/>
                                 <ComboBoxItem Content="01"/>
                                 <ComboBoxItem Content="02"/>
@@ -186,7 +182,7 @@
                                 <ComboBoxItem Content="58"/>
                                 <ComboBoxItem Content="59"/>
                             </ComboBox>
-                            <ComboBox Margin="0" x:Name="ampmCB" Width="57" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
+                            <ComboBox Margin="0" x:Name="ampmCB" Width="57" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="ampmCB_SelectionChanged"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
                                 <ComboBoxItem Content="AM"/>
                                 <ComboBoxItem Content="PM"/>
                             </ComboBox>
