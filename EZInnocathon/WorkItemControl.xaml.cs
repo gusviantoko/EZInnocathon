@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System.Globalization;
 using System.Windows.Resources;
 using System.IO;
+using System.Diagnostics;
 
 namespace EZInnocathon
 {
@@ -31,7 +32,7 @@ namespace EZInnocathon
             switch (ampmcase)
             {
                 case 0: ampm = "AM"; break;
-                case 1: ampm = "AM"; break;
+                case 1: ampm = "PM"; break;
             }
 
             //just use this for day lol
@@ -124,24 +125,34 @@ namespace EZInnocathon
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
             string target = this.ItemPath.Text.ToString();
-            runWorkItem(target);
+            string state = ((ComboBoxItem)(((WorkItemControl)this).windowStateCB).SelectedItem).Content.ToString();
+
+            runWorkItem(target, state);
         }
 
-        public void runWorkItem(string target)
+        public void runWorkItem(string target, string state)
         {
             try
             {
-                System.Diagnostics.Process.Start(target);
+                ProcessStartInfo theProcess = new ProcessStartInfo(target);
+                switch (state)
+                {
+                    case "Default":
+                        theProcess.WindowStyle = ProcessWindowStyle.Normal;
+                        break;
+                    case "Maximized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Maximized;
+                        break;
+                    case "Minimized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Minimized;
+                        break;
+                }
+                Process.Start(theProcess);
             }
             catch (Exception w)
             {
                 MessageBox.Show(w.Message);
             }
-        }
-
-        private void windowStateCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void dayScheduleCB_SelectionChanged(object sender, SelectionChangedEventArgs e)

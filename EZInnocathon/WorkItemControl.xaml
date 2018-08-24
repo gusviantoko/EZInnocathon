@@ -69,7 +69,7 @@
                             <ComboBoxItem Content="File/Program"/>
                             <ComboBoxItem Content="Website"/>
                         </ComboBox>
-                        <ComboBox Margin="10" x:Name="windowStateCB" Width="150" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
+                        <ComboBox Margin="10" x:Name="windowStateCB" Width="150" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
                             <ComboBoxItem Content="Maximized"/>
                             <ComboBoxItem Content="Minimized"/>
                             <ComboBoxItem Content="Default"/>
@@ -89,7 +89,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="resource\monitor.png" Stretch="Uniform" Width="30" Opacity="0.7"></Image>
-                            <ComboBox Margin="5 10" x:Name="monitorCB" Width="50" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
+                            <ComboBox Margin="5 10" x:Name="monitorCB" Width="50" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
                                 <ComboBoxItem Content="#1"/>
                                 <ComboBoxItem Content="#2"/>
                             </ComboBox>
@@ -106,11 +106,8 @@
                                 <ComboBoxItem Content="Saturdays"/>
                                 <ComboBoxItem Content="Sundays"/>
                             </ComboBox>
-<<<<<<< HEAD
-                            <ComboBox Margin="0" x:Name="hourCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="hourCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
-=======
-                            <ComboBox Margin="0" x:Name="hourCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
->>>>>>> master
+
+                            <ComboBox Margin="0" x:Name="hourCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="hourCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
                                 <ComboBoxItem Content="1"/>
                                 <ComboBoxItem Content="2"/>
                                 <ComboBoxItem Content="3"/>
@@ -124,11 +121,8 @@
                                 <ComboBoxItem Content="11"/>
                                 <ComboBoxItem Content="12"/>
                             </ComboBox>
-<<<<<<< HEAD
-                            <ComboBox Margin="0" x:Name="minuteCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="minuteCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
-=======
-                            <ComboBox Margin="0" x:Name="minuteCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
->>>>>>> master
+
+                            <ComboBox Margin="0" x:Name="minuteCB" Width="48" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="minuteCB_SelectionChanged" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
                                 <ComboBoxItem Content="00"/>
                                 <ComboBoxItem Content="01"/>
                                 <ComboBoxItem Content="02"/>
@@ -190,11 +184,8 @@
                                 <ComboBoxItem Content="58"/>
                                 <ComboBoxItem Content="59"/>
                             </ComboBox>
-<<<<<<< HEAD
-                            <ComboBox Margin="0" x:Name="ampmCB" Width="57" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="ampmCB_SelectionChanged"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}">
-=======
-                            <ComboBox Margin="0" x:Name="ampmCB" Width="57" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic" SelectionChanged="windowStateCB_SelectionChanged"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content">
->>>>>>> master
+
+                            <ComboBox Margin="0" x:Name="ampmCB" Width="57" Height="40" HorizontalAlignment="Left" FontSize="18" FontFamily="Century Gothic"  Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}"  SelectedValuePath="Content" SelectionChanged="ampmCB_SelectionChanged">
                                 <ComboBoxItem Content="AM"/>
                                 <ComboBoxItem Content="PM"/>
                             </ComboBox>

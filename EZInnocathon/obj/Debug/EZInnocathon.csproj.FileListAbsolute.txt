@@ -32,4 +32,6 @@ C:\Users\eduardo_p\Documents\GitHub\EZInnocathon\EZInnocathon\obj\Debug\EZInnoca
 C:\Users\eduardo_p\Documents\GitHub\EZInnocathon\EZInnocathon\obj\Debug\EZInnocathon.csproj.GenerateResource.Cache
 C:\Users\eduardo_p\Documents\GitHub\EZInnocathon\EZInnocathon\obj\Debug\EZInnocathon.exe
 C:\Users\eduardo_p\Documents\GitHub\EZInnocathon\EZInnocathon\obj\Debug\EZInnocathon.pdb
+C:\Users\eduardo_p\Documents\GitHub\EZInnocathon\EZInnocathon\obj\Debug\Interop.IWshRuntimeLibrary.dll
+C:\Users\eduardo_p\Documents\GitHub\EZInnocathon\EZInnocathon\obj\Debug\EZInnocathon.csproj.ResolveComReference.cache
 C:\Users\eduardo_p\Documents\GitHub\EZInnocathon\EZInnocathon\obj\Debug\EZInnocathon.csprojResolveAssemblyReference.cache
