@@ -20,13 +20,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="PreviewMouseDown"  Handler="playSoundBottomButtons"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FFFF4E27"/>
-                </Trigger>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <SoundPlayerAction Source="resource/crit.wav" />
-                </EventTrigger>
+                </Trigger>                
             </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type Button}">
@@ -43,13 +41,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="PreviewMouseDown"  Handler="playSoundNormalButtons"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FF153A7A"/>
                 </Trigger>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <SoundPlayerAction Source="resource/speech.wav" />
-                </EventTrigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
@@ -193,10 +189,10 @@
                         <TextBlock Text="By sponsoring EZO, your company logo will be displayed in EZO Credit page and also on our website. Please send an enquiry to hi@ezorganizer.com or visit our website www.ezorganizer.com. our team will guide you with the procedure." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
                     </Expander>
                     <Expander Header=" How do I import the saved file?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="Simply click Save a Copy button in Work Item menu. this acts like a configuration file that saves all your work items. you can load up this configuration file back to any EZO via Import menu." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                        <TextBlock FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"><Run Text="Simply click "/><Run Text="Export Work Item "/><Run Text="button in Work Item menu. this acts like a configuration file that saves all your work items. you can load up this configuration file back to any EZO via Import menu."/></TextBlock>
                     </Expander>
                     <Expander Header="Where does the shortcut created?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
-                        <TextBlock Text="The shortcut will be put in your desktop folder with name EZOrganizer.bat. you can click the shortcut to open all your work items. please note that only non-scheduled item can be process by the shortcut. " FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
+                        <TextBlock FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"><Run Text="The shortcut will be put in your desktop folder with name "/><Run Text="Run EZO Work Items"/><Run Text=".bat. you can click the shortcut to open all your work items. please note that only non-scheduled item can be process by the shortcut. "/></TextBlock>
                     </Expander>
                     <Expander Header="What files can be run by EZ Organizer?" FontFamily="Century Gothic" FontSize="30" Margin="70 10 10 20">
                         <TextBlock Text="You can open basically any file, as long there is program installed in your machine to handle the file. You can also open folder, network locations, website, and programs. You can even open program with special parameters that come with it." FontFamily="Century Gothic" FontSize="20" HorizontalAlignment="left" Foreground="#FF292929" TextWrapping="Wrap" Margin="30"/>
@@ -264,10 +260,10 @@
                     </StackPanel>
                 </Button>
                 <DockPanel Name="emptySpaceDockLOL" Width="0"></DockPanel>
-                <Button x:Name="saveButton" Margin="10" Height="70" Width="220" Click="saveButton_Click" Style="{DynamicResource BottomButtons}">
+                <Button x:Name="saveButton" Margin="10" Height="70" Width="230" Click="saveButton_Click" Style="{DynamicResource BottomButtons}">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                         <Image Source="resource\saveicon.png" Stretch="Uniform" Width="20" Margin=" 0 0 15 0" Opacity="0.8"/>
-                        <TextBlock Text="Save a Copy" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
+                        <TextBlock Text="Export Work Items" FontSize="20" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="shortcutButton" Margin="10" Height="70" Width="220" Click="shortcutButton_Click" Style="{DynamicResource BottomButtons}">

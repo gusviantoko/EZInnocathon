@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
+using System.Globalization;
+using System.Windows.Resources;
+using System.IO;
+using System.Diagnostics;
 
 namespace EZInnocathon
 {
@@ -21,15 +14,54 @@ namespace EZInnocathon
     /// </summary>
     public partial class WorkItemControl : UserControl
     {
+        public DateTime schedule;                
+
         public WorkItemControl()
         {
             InitializeComponent();
             hideScheduleControl(dayScheduleCB.SelectedIndex);
             setDefault();
+            buildCalendar(dayScheduleCB.SelectedIndex, hourCB.SelectedIndex, minuteCB.SelectedIndex, ampmCB.SelectedIndex);
+        }
+
+        private void buildCalendar(int day, int hour, int minute, int ampmcase)
+        {
+            CultureInfo culture = new CultureInfo("en-US");
+            string ampm="AM";
+
+            switch (ampmcase)
+            {
+                case 0: ampm = "AM"; break;
+                case 1: ampm = "PM"; break;
+            }
+
+            //just use this for day lol
+            string daily = string.Format("1/7/2018 {0}:{1}:00 {2}", hour+1, minute, ampm); //set daily to sunday 00:00AM
+            string monday = string.Format("1/1/2018 {0}:{1}:00 {2}", hour+1, minute, ampm);
+            string tuesday = string.Format("1/2/2018 {0}:{1}:00 {2}", hour + 1, minute, ampm);
+            string wednesday = string.Format("1/3/2018 {0}:{1}:00 {2}", hour + 1, minute, ampm);
+            string thursday = string.Format("1/4/2018 {0}:{1}:00 {2}", hour + 1, minute, ampm);
+            string friday = string.Format("1/5/2018 {0}:{1}:00 {2}", hour + 1, minute, ampm);
+            string saturday = string.Format("1/6/2018 {0}:{1}:00 {2}", hour + 1, minute, ampm);
+            string sunday = string.Format("1/7/2018 {0}:{1}:00 {2}", hour + 1, minute, ampm);
+
+            switch (day)
+            {
+                case 3: schedule = Convert.ToDateTime(daily, culture); break;
+                case 4: schedule = Convert.ToDateTime(monday, culture); break;
+                case 5: schedule = Convert.ToDateTime(tuesday, culture); break;
+                case 6: schedule = Convert.ToDateTime(wednesday, culture); break;
+                case 7: schedule = Convert.ToDateTime(thursday, culture); break;
+                case 8: schedule = Convert.ToDateTime(friday, culture); break;
+                case 9: schedule = Convert.ToDateTime(saturday, culture); break;
+                case 10: schedule = Convert.ToDateTime(sunday, culture); break;
+            }            
         }
 
         public void setDefault()
         {
+            schedule = DateTime.MinValue;
+
             ampmCB.SelectedIndex = 0;
             hourCB.SelectedIndex = 8;
             minuteCB.SelectedIndex = 0;
@@ -93,24 +125,34 @@ namespace EZInnocathon
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
             string target = this.ItemPath.Text.ToString();
-            runWorkItem(target);
+            string state = ((ComboBoxItem)(((WorkItemControl)this).windowStateCB).SelectedItem).Content.ToString();
+
+            runWorkItem(target, state);
         }
 
-        public void runWorkItem(string target)
+        public void runWorkItem(string target, string state)
         {
             try
             {
-                System.Diagnostics.Process.Start(target);
+                ProcessStartInfo theProcess = new ProcessStartInfo(target);
+                switch (state)
+                {
+                    case "Default":
+                        theProcess.WindowStyle = ProcessWindowStyle.Normal;
+                        break;
+                    case "Maximized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Maximized;
+                        break;
+                    case "Minimized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Minimized;
+                        break;
+                }
+                Process.Start(theProcess);
             }
             catch (Exception w)
             {
                 MessageBox.Show(w.Message);
             }
-        }
-
-        private void windowStateCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void dayScheduleCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -130,7 +172,10 @@ namespace EZInnocathon
                 hourCB.Visibility = Visibility.Visible;
                 minuteCB.Visibility = Visibility.Visible;
             }
-            
+
+            buildCalendar(dayScheduleCB.SelectedIndex, hourCB.SelectedIndex, minuteCB.SelectedIndex, ampmCB.SelectedIndex);
+
+
         }
 
         private void browseButton_Click(object sender, RoutedEventArgs e)
@@ -167,5 +212,38 @@ namespace EZInnocathon
             }
             
         }
+
+        private void hourCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            buildCalendar(dayScheduleCB.SelectedIndex, hourCB.SelectedIndex, minuteCB.SelectedIndex, ampmCB.SelectedIndex);
+        }
+
+        private void minuteCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            buildCalendar(dayScheduleCB.SelectedIndex, hourCB.SelectedIndex, minuteCB.SelectedIndex, ampmCB.SelectedIndex);
+        }
+
+        private void ampmCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            buildCalendar(dayScheduleCB.SelectedIndex, hourCB.SelectedIndex, minuteCB.SelectedIndex, ampmCB.SelectedIndex);
+        }
+
+        public void playSoundDeleteButtons(object sender, RoutedEventArgs e)
+        {
+            StreamResourceInfo sri = Application.GetResourceStream(new Uri("resource/low.wav", UriKind.Relative));
+            Stream fs = sri.Stream;
+            var soundPlayer = new System.Media.SoundPlayer(fs);
+            soundPlayer.Play();
+        }
+
+        public void playSoundBrowseButtons(object sender, RoutedEventArgs e)
+        {
+            StreamResourceInfo sri = Application.GetResourceStream(new Uri("resource/crit.wav", UriKind.Relative));
+            Stream fs = sri.Stream;
+            var soundPlayer = new System.Media.SoundPlayer(fs);
+            soundPlayer.Play();
+        }
+
+
     }
 }

@@ -11,10 +11,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/buttonsound%20(1).wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/buttonsound.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/chimes.wav")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/crit.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/ir_begin.wav")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/low.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/nudge.wav")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resource/speech.wav")]
 
 

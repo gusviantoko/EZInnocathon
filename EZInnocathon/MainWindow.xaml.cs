@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
+using fileio= System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Media;
+using System.Windows.Threading;
+using System.Diagnostics;
+using System.Windows.Resources;
+using System.Reflection;
+using System.Collections;
 using Microsoft.Win32;
+using System.Text;
+using IWshRuntimeLibrary;
 
 namespace EZInnocathon
 {
@@ -25,15 +23,139 @@ namespace EZInnocathon
     public partial class MainWindow : Window
     {
         StackPanel container;
+        DispatcherTimer timer1;
 
         public MainWindow()
         {
             InitializeComponent();
             container = WorkItemWrapper;
-            getCal();
-            addWorkItem();            
+            InitTimer();
+            moveExe();
+            //getCal();
+            addWorkItem();
+            var x = GetResourceNames();
+        }
+
+        //this will only work with EXE that is not generated for debugging and while running it with Visual Studio because there will be DLL locking and other issues.
+        //copy the EXE somewhere else to try.
+        public void moveExe()
+        {
+            string me = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string destination = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            fileio.FileInfo aboutme = new fileio.FileInfo(me);
+
+            //TODO: currently: if not run from startup, EZO will ask for copy the exe to startup, close current running EZO, then run the one in startup.
+            //it will be ideal that at first time EZO being copy to startup folder, a copy of export file also be created under APPDATA folder for example, then EZO
+            //will read the file everytime.
+            if (aboutme.DirectoryName == destination)
+            {
+                //the file is already in startup folder
+            }
+            else
+            {
+                if (MessageBox.Show("Do you want to put this program into Startup folder" +Environment.NewLine + Environment.NewLine +
+                    "(" +destination+ ")"+ Environment.NewLine + Environment.NewLine +
+                    "So that EZ Organizer can be run on Windows startup?" + Environment.NewLine + Environment.NewLine +
+                    "(a shortcut will be created in desktop)", "EZ Organizer is not run from Startup folder", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    fileio.File.Copy(me, destination + "\\" + aboutme.Name, true);
+                    System.Diagnostics.Process.Start(destination + "\\" + aboutme.Name);
+                    CreateShortcut(aboutme.Name);
+                    this.Close();
+                }
+            }
+        }
+
+        private void CreateShortcut(string name)
+        {            
+            try
+            {
+                name = name.Substring(0, name.Length - 4);
+                object shDesktop = (object)"Desktop";
+                WshShell shell = new WshShell();
+                string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\"+ name + ".lnk";
+                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+                shortcut.Description = "Shortcut for EZ Organizer in Startup folder";
+                shortcut.TargetPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + @"\"+name+".exe";
+                shortcut.Save();
+            }
+            catch(Exception)
+            {
+
+            }
+        }
+
+        public void InitTimer()
+        {
+            timer1 = new DispatcherTimer();
+            timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Interval = new TimeSpan(0, 0 , 1); //1 sec
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            GetAndRunScheduledItem();
         }
         
+
+        private void GetAndRunScheduledItem()
+        {
+            DateTime now = DateTime.Now;
+            List<ProcessStartInfo> matchedItem = new List<ProcessStartInfo>();
+            foreach (WorkItemControl x in container.Children)
+            {
+                var sched = x.schedule;
+                var CB = x.dayScheduleCB.SelectedIndex;
+                string state = ((ComboBoxItem)(((WorkItemControl)x).windowStateCB).SelectedItem).Content.ToString();
+
+
+                ProcessStartInfo theProcess = new ProcessStartInfo(x.ItemPath.Text);
+                switch (state)
+                {
+                    case "Default":
+                        theProcess.WindowStyle = ProcessWindowStyle.Normal;
+                        break;
+                    case "Maximized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Maximized;
+                        break;
+                    case "Minimized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Minimized;
+                        break;
+                }
+
+                if (CB == 3 || CB == 4 || CB == 5 || CB == 6 || CB == 7 || CB == 8 || CB == 9 || CB == 10)
+                {
+                    if (CB == 3)//daily
+                    {
+                        // set to seconds level so that item will only run once when the second is sharp 0.
+                        if (sched.Hour == now.Hour && sched.Minute == now.Minute && sched.Second == now.Second)
+                        {
+                            matchedItem.Add(theProcess);
+
+                        }
+                    }
+                    else
+                    {
+                        // set to seconds level so that item will only run once when the second is sharp 0.
+                        if (sched.DayOfWeek == now.DayOfWeek && sched.Hour == now.Hour && sched.Minute == now.Minute && sched.Second == now.Second)
+                        {
+                            matchedItem.Add(theProcess);
+                        }
+                    }
+                }                
+            }
+
+            if (matchedItem.Count > 0)
+            {
+                foreach (ProcessStartInfo item in matchedItem)
+                {
+                    runWorkItem(item);
+                }
+            }
+
+        }
+
         private void getCal()
         {
             dayText.Text = DateTime.Today.DayOfWeek.ToString();
@@ -84,7 +206,7 @@ namespace EZInnocathon
    
 
         public void addWorkItem()
-        {
+        {   
             WorkItemControl uc = new EZInnocathon.WorkItemControl();
             
             container.Children.Add(uc);
@@ -95,24 +217,42 @@ namespace EZInnocathon
             foreach(var x in container.Children)
             {
                 string target = ((WorkItemControl)x).ItemPath.Text;
-                runWorkItem(target);
+                string state = ((ComboBoxItem)(((WorkItemControl)x).windowStateCB).SelectedItem).Content.ToString();
+
+
+                ProcessStartInfo theProcess = new ProcessStartInfo(target);
+                switch (state)
+                {
+                    case "Default":
+                        theProcess.WindowStyle = ProcessWindowStyle.Normal;
+                        break;
+                    case "Maximized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Maximized;
+                        break;
+                    case "Minimized":
+                        theProcess.WindowStyle = ProcessWindowStyle.Minimized;
+                        break;
+                }
+
+                runWorkItem(theProcess);
             }
         }
 
-        public void runWorkItem(string target)
-        {
+        public void runWorkItem(ProcessStartInfo target)
+        {            
             try
             {
                 System.Diagnostics.Process.Start(target);
             }
             catch (Exception)
             {
+                //if there's error, let it be. don't tell em
             }
         }
 
         public void WriteShortcut()
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\EZOrganizer.bat";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\Run EZO Work Items.bat";
             try
             {
                 StringBuilder buildShortcut = new StringBuilder();
@@ -138,7 +278,7 @@ namespace EZInnocathon
                     buildShortcut.Append("sleep 1").Append(Environment.NewLine);
                 }
 
-                File.WriteAllText(path, buildShortcut.ToString());
+                fileio.File.WriteAllText(path, buildShortcut.ToString());
                 MessageBox.Show("shortcut has been created in " + path);
             }
             catch(Exception e)
@@ -174,7 +314,7 @@ namespace EZInnocathon
                     exportFileContent.Append("|").Append(minute);
                     exportFileContent.Append("|").Append(ampm);
                 }
-                File.WriteAllText(saveFileDialog.FileName, exportFileContent.ToString());
+                fileio.File.WriteAllText(saveFileDialog.FileName, exportFileContent.ToString());
             }   
         }
 
@@ -200,7 +340,34 @@ namespace EZInnocathon
             this.WindowState = WindowState.Minimized;
 
         }
+        
+        public void playSoundBottomButtons(object sender, RoutedEventArgs e)
+        {
+            StreamResourceInfo sri = Application.GetResourceStream(new Uri("resource/crit.wav", UriKind.Relative));
+            fileio.Stream fs = sri.Stream;
+            var soundPlayer = new System.Media.SoundPlayer(fs);
+            soundPlayer.Play();
+        }
 
+        public void playSoundNormalButtons(object sender, RoutedEventArgs e)
+        {
+            StreamResourceInfo sri = Application.GetResourceStream(new Uri("resource/speech.wav", UriKind.Relative));
+            fileio.Stream fs = sri.Stream;
+            var soundPlayer = new System.Media.SoundPlayer(fs);
+            soundPlayer.Play();
+        }
+
+        //only used to identify all resource in resources. debugging purpose only.
+        public static string[] GetResourceNames()
+        {
+            var asm = Assembly.GetEntryAssembly();
+            string resName = asm.GetName().Name + ".g.resources";
+            using (var stream = asm.GetManifestResourceStream(resName))
+            using (var reader = new System.Resources.ResourceReader(stream))
+            {
+                return reader.Cast<DictionaryEntry>().Select(entry => (string)entry.Key).ToArray();
+            }
+        }
         private void browseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -219,7 +386,7 @@ namespace EZInnocathon
                 if (ImportTextBox.Text.Substring(ImportTextBox.Text.Length - 4).ToUpper() == ".EZO")
                 {
                     string readContents;
-                    using (StreamReader streamReader = new StreamReader(ImportTextBox.Text))
+                    using (fileio.StreamReader streamReader = new fileio.StreamReader(ImportTextBox.Text))
                     {
                         readContents = streamReader.ReadToEnd();
                     }
