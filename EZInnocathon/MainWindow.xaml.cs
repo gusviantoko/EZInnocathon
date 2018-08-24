@@ -60,7 +60,6 @@ namespace EZInnocathon
                 {
                     fileio.File.Copy(me, destination + "\\" + aboutme.Name, true);
                     System.Diagnostics.Process.Start(destination + "\\" + aboutme.Name);
-                    System.Diagnostics.Process.Start(destination);
                     CreateShortcut(aboutme.Name);
                     this.Close();
                 }
