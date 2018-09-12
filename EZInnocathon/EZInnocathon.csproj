@@ -189,14 +189,26 @@
     <Resource Include="ezo_logo_shadow_Tzu_icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\Resource\crit.wav" />
     <Content Include="Resource\buttonsound %281%29.wav" />
     <Content Include="Resource\buttonsound.wav" />
     <Content Include="Resource\chimes.wav" />
-    <Content Include="Resource\crit.wav" />
+    <Resource Include="Resource\crit.wav" />
     <Content Include="Resource\ir_begin.wav" />
-    <Content Include="Resource\low.wav" />
+    <Resource Include="Resource\low.wav" />
     <Content Include="Resource\nudge.wav" />
-    <Content Include="Resource\speech.wav" />
+    <Resource Include="Resource\speech.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
