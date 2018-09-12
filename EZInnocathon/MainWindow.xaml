@@ -75,17 +75,6 @@
                 </DockPanel>
                 <DockPanel Height="160" DockPanel.Dock="Top" LastChildFill="False" Visibility="Collapsed">
                     <DockPanel Height="50" DockPanel.Dock="top"/>
-                    <DockPanel DockPanel.Dock="top" Margin="58 0 0 0">
-                        <TextBlock Name="dayText" Text="Wednesday" FontSize="25" VerticalAlignment="Center" FontFamily="Century Gothic" HorizontalAlignment="Left" Foreground="White"></TextBlock>
-                    </DockPanel>
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <DockPanel DockPanel.Dock="Left">
-                            <TextBlock Name="dateText" Text="17" FontSize="50" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White" Margin="58 0 10 0"></TextBlock>
-                        </DockPanel>
-                        <DockPanel DockPanel.Dock="Left">
-                            <TextBlock Name="monthText" Text="February" FontSize="15" VerticalAlignment="Top" FontFamily="Century Gothic" Foreground="White" Margin="0 10 0 0"></TextBlock>
-                        </DockPanel>
-                    </StackPanel>
                 </DockPanel>
                 <TextBlock DockPanel.Dock="Top" Name="EZOrganizer" Text="EZ ORGANIZER" FontSize="25" VerticalAlignment="Top" FontFamily="Century Gothic" Foreground="White" Margin="0 0 0 0" HorizontalAlignment="Center"></TextBlock>
 
@@ -93,12 +82,12 @@
 
                     <DockPanel Height="50" DockPanel.Dock="Top">
                         <Image Source="resource\paint-brush.png" Margin="0 0 3 0" Stretch="Uniform" Width="25"></Image>
-                        <TextBlock Name="countNormalItem" Margin="5 0 20 0" Text="1" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
+                        <TextBlock Name="countNormalItem" Margin="5 0 20 0" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
                     </DockPanel>
                     <TextBlock Text="|" FontSize="35" Foreground="#33FFFFFF" VerticalAlignment="Top"></TextBlock>
                     <DockPanel Height="50" DockPanel.Dock="Top">
                         <Image Source="resource\alarm-clock.png" Margin="20 0 3 0" Stretch="Uniform" Width="25"></Image>
-                        <TextBlock Name="countSchedItem" Margin="5 0 20 0" Text="3" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
+                        <TextBlock Name="countSchedItem" Margin="5 0 20 0" FontSize="24" VerticalAlignment="Center" FontFamily="Century Gothic" Foreground="White"></TextBlock>
                     </DockPanel>
                 </StackPanel>
                 <DockPanel Height="100" DockPanel.Dock="Top"></DockPanel>
@@ -132,7 +121,7 @@
             </DockPanel>
 
         </DockPanel>
-        <DockPanel x:Name="aboutPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1001" d:IsHidden="True">
+        <DockPanel x:Name="aboutPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1001">
             <DockPanel.Background>
                 <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
             </DockPanel.Background>
@@ -143,18 +132,19 @@
                     </DockPanel>
                     <DockPanel DockPanel.Dock="Top">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image Source="resource\stark.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="220"/>
+                            <!--<Image Source="resource\stark.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="220"/>
                             <Image Source="resource\mitrais_teaser.jpg" Margin="0 25 0 15" DockPanel.Dock="Top" Width="300"/>
-                            <Image Source="resource\wayne.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="220"/>
+                            <Image Source="resource\wayne.jpg" Margin="50 25 50 15" DockPanel.Dock="Top" Width="220"/>-->
                         </StackPanel>
                     </DockPanel>
                     <DockPanel Margin="0 50 0 0" DockPanel.Dock="Top" Height="70">
                         <TextBlock Text="THE CHEFS" FontFamily="Century Gothic" FontSize="60" HorizontalAlignment="Center" Foreground="#FF292929"/>
                     </DockPanel>
                     <DockPanel Margin="100 0 0 0" DockPanel.Dock="Left"  LastChildFill="False">
-                        <Image Source="resource\cardVian.png" DockPanel.Dock="Top" Width="600"/>
+                        
+                        <!--<Image Source="resource\cardVian.png" DockPanel.Dock="Top" Width="600"/>
                         <Image Source="resource\cardAstri800.png" DockPanel.Dock="Top" Width="600"/>
-                        <Image Source="resource\cardEdo800.png" DockPanel.Dock="Top" Width="600"/>
+                        <Image Source="resource\cardEdo800.png" DockPanel.Dock="Top" Width="600"/>-->
                     </DockPanel>
                     <DockPanel Margin="0 0 0 0" DockPanel.Dock="Top">
                         <DockPanel DockPanel.Dock="Top">
@@ -168,7 +158,7 @@
             </ScrollViewer>
 
         </DockPanel>
-        <DockPanel x:Name="helpPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000">
+        <DockPanel x:Name="helpPanel" Width="1000" LastChildFill="False" Margin="250,40,0,0" d:LayoutOverrides="Height" Panel.ZIndex="1000" d:IsHidden="True">
             <DockPanel.Background>
                 <ImageBrush ImageSource="Resource/sayagata-400px.png"  TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,300,300"/>
             </DockPanel.Background>

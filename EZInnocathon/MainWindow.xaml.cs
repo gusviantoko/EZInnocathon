@@ -24,16 +24,44 @@ namespace EZInnocathon
     {
         StackPanel container;
         DispatcherTimer timer1;
+        int NormalItemTotal;
+        int SchedItemTotal;
 
         public MainWindow()
         {
             InitializeComponent();
             container = WorkItemWrapper;
-            InitTimer();
+            InitTimer();            
+            checkForExistingItems();
             moveExe();
-            //getCal();
-            addWorkItem();
             var x = GetResourceNames();
+        }
+
+        private void checkForExistingItems()
+        {
+            StringBuilder location = new StringBuilder();
+            location.Append(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString()).Append("\\EZ ORGANIZER\\EZODEFAULT.ezo");
+
+            //if APPDATA has EZODEFAULT.ezo
+            if (fileio.File.Exists(location.ToString()))
+            {
+                //import that default file.
+                importEZOFile(location.ToString());
+            }
+            else
+            {
+                //add one empty work item
+                addWorkItem(); //this method also include methods to export default EZO file to APPDATA                
+            }
+        }
+
+        //Every combobox change and item path change, and item add and remove, they will call this method
+        public void writeEZODefault()
+        {
+            StringBuilder location = new StringBuilder();
+            location.Append(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).ToString()).Append("\\EZ ORGANIZER\\EZODEFAULT.ezo");
+
+            writeEZOFile(location.ToString());
         }
 
         //this will only work with EXE that is not generated for debugging and while running it with Visual Studio because there will be DLL locking and other issues.
@@ -43,25 +71,30 @@ namespace EZInnocathon
             string me = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string destination = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
             fileio.FileInfo aboutme = new fileio.FileInfo(me);
+            StringBuilder fullPathInDestination = new StringBuilder().Append(destination).Append("\\").Append(aboutme.Name);
 
-            //TODO: currently: if not run from startup, EZO will ask for copy the exe to startup, close current running EZO, then run the one in startup.
-            //it will be ideal that at first time EZO being copy to startup folder, a copy of export file also be created under APPDATA folder for example, then EZO
-            //will read the file everytime.
+            
             if (aboutme.DirectoryName == destination)
             {
-                //the file is already in startup folder
+                //the file is run from startup folder
             }
             else
             {
-                if (MessageBox.Show("Do you want to put this program into Startup folder" +Environment.NewLine + Environment.NewLine +
-                    "(" +destination+ ")"+ Environment.NewLine + Environment.NewLine +
+                //if STARTUP Folder don't have the EZO exe file, ask to copy the exe to startup. (in order to get the EZO run when startup)
+                //if STARTUP has it, doesn't matter where is the exe located, because it is loading the EZO default file anyway.
+                //this might change when EZO has different format of EZO default when version number increases.
+                if (!fileio.File.Exists(fullPathInDestination.ToString()))
+                {
+                    if (MessageBox.Show("Do you want to put this program into Startup folder" + Environment.NewLine + Environment.NewLine +
+                    "(" + destination + ")" + Environment.NewLine + Environment.NewLine +
                     "So that EZ Organizer can be run on Windows startup?" + Environment.NewLine + Environment.NewLine +
                     "(a shortcut will be created in desktop)", "EZ Organizer is not run from Startup folder", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    fileio.File.Copy(me, destination + "\\" + aboutme.Name, true);
-                    System.Diagnostics.Process.Start(destination + "\\" + aboutme.Name);
-                    CreateShortcut(aboutme.Name);
-                    this.Close();
+                    {
+                        fileio.File.Copy(me, destination + "\\" + aboutme.Name, true);
+                        System.Diagnostics.Process.Start(destination + "\\" + aboutme.Name);
+                        CreateShortcut(aboutme.Name);
+                        this.Close();
+                    }
                 }
             }
         }
@@ -96,18 +129,18 @@ namespace EZInnocathon
         private void timer1_Tick(object sender, EventArgs e)
         {
             GetAndRunScheduledItem();
-        }
-        
+        }        
 
         private void GetAndRunScheduledItem()
         {
             DateTime now = DateTime.Now;
-            List<ProcessStartInfo> matchedItem = new List<ProcessStartInfo>();
+            List<Tuple<ProcessStartInfo,String>> matchedItem = new List<Tuple<ProcessStartInfo,String>>();
             foreach (WorkItemControl x in container.Children)
             {
                 var sched = x.schedule;
                 var CB = x.dayScheduleCB.SelectedIndex;
                 string state = ((ComboBoxItem)(((WorkItemControl)x).windowStateCB).SelectedItem).Content.ToString();
+                string type = ((ComboBoxItem)(((WorkItemControl)x).typeCB).SelectedItem).Content.ToString();
 
 
                 ProcessStartInfo theProcess = new ProcessStartInfo(x.ItemPath.Text);
@@ -131,7 +164,7 @@ namespace EZInnocathon
                         // set to seconds level so that item will only run once when the second is sharp 0.
                         if (sched.Hour == now.Hour && sched.Minute == now.Minute && sched.Second == now.Second)
                         {
-                            matchedItem.Add(theProcess);
+                            matchedItem.Add(new Tuple<ProcessStartInfo, String> (theProcess, type));
 
                         }
                     }
@@ -140,7 +173,7 @@ namespace EZInnocathon
                         // set to seconds level so that item will only run once when the second is sharp 0.
                         if (sched.DayOfWeek == now.DayOfWeek && sched.Hour == now.Hour && sched.Minute == now.Minute && sched.Second == now.Second)
                         {
-                            matchedItem.Add(theProcess);
+                            matchedItem.Add(new Tuple<ProcessStartInfo, String>(theProcess, type));
                         }
                     }
                 }                
@@ -148,22 +181,15 @@ namespace EZInnocathon
 
             if (matchedItem.Count > 0)
             {
-                foreach (ProcessStartInfo item in matchedItem)
+                foreach (Tuple<ProcessStartInfo, String> item in matchedItem)
                 {
-                    runWorkItem(item);
+                    //item 1 is task path, item 2 is the type
+                    runWorkItem(item.Item1, item.Item2);
                 }
             }
 
         }
-
-        private void getCal()
-        {
-            dayText.Text = DateTime.Today.DayOfWeek.ToString();
-            monthText.Text = DateTime.Today.ToString("MMMM", CultureInfo.CreateSpecificCulture("en"));
-            dateText.Text = DateTime.Today.Day.ToString();
-            
-        }
-        
+                
         private void CreditButton_Click(object sender, RoutedEventArgs e)
         {
             aboutPanel.Visibility = Visibility.Visible;
@@ -199,17 +225,40 @@ namespace EZInnocathon
         private void addItemButton_Click(object sender, RoutedEventArgs e)
         {
             addWorkItem();
-            int countItem;
-            int.TryParse(countNormalItem.Text, out countItem);
-            countNormalItem.Text = (countItem + 1).ToString();
+            countItems();
+        }
+
+        public void countItems()
+        {
+            int sched = 0;
+            int normal = 0;
+
+            //read all items
+            foreach (var x in container.Children)
+            {
+                string target = ((WorkItemControl)x).ItemPath.Text;
+                string scheduleCB = ((ComboBoxItem)(((WorkItemControl)x).dayScheduleCB).SelectedItem).Content.ToString();
+                if (scheduleCB.ToLower() != "no schedule")
+                {
+                    sched++;
+                }
+                else
+                {
+                    normal++;
+                }
+            }
+
+            countSchedItem.Text = sched.ToString();
+            countNormalItem.Text = normal.ToString();
         }
    
 
         public void addWorkItem()
         {   
-            WorkItemControl uc = new EZInnocathon.WorkItemControl();
-            
+            WorkItemControl uc = new EZInnocathon.WorkItemControl();            
             container.Children.Add(uc);
+
+            writeEZODefault();
         }
 
         private void runAllButton_Click(object sender, RoutedEventArgs e)
@@ -218,31 +267,41 @@ namespace EZInnocathon
             {
                 string target = ((WorkItemControl)x).ItemPath.Text;
                 string state = ((ComboBoxItem)(((WorkItemControl)x).windowStateCB).SelectedItem).Content.ToString();
-
+                string type = ((ComboBoxItem)(((WorkItemControl)x).typeCB).SelectedItem).Content.ToString();
 
                 ProcessStartInfo theProcess = new ProcessStartInfo(target);
-                switch (state)
+
+                if (type != "Message")
                 {
-                    case "Default":
-                        theProcess.WindowStyle = ProcessWindowStyle.Normal;
-                        break;
-                    case "Maximized":
-                        theProcess.WindowStyle = ProcessWindowStyle.Maximized;
-                        break;
-                    case "Minimized":
-                        theProcess.WindowStyle = ProcessWindowStyle.Minimized;
-                        break;
+                    switch (state)
+                    {
+                        case "Default":
+                            theProcess.WindowStyle = ProcessWindowStyle.Normal;
+                            break;
+                        case "Maximized":
+                            theProcess.WindowStyle = ProcessWindowStyle.Maximized;
+                            break;
+                        case "Minimized":
+                            theProcess.WindowStyle = ProcessWindowStyle.Minimized;
+                            break;
+                    }
                 }
 
-                runWorkItem(theProcess);
+                runWorkItem(theProcess, type);
             }
         }
 
-        public void runWorkItem(ProcessStartInfo target)
+        public void runWorkItem(ProcessStartInfo target, string type)
         {            
             try
             {
-                System.Diagnostics.Process.Start(target);
+                //this function is used by run all work item.
+                //which we don't have to run message type item along
+                //run only items that are not Message
+                if (type != "Message")
+                {
+                    System.Diagnostics.Process.Start(target);
+                }
             }
             catch (Exception)
             {
@@ -293,29 +352,35 @@ namespace EZInnocathon
             saveFileDialog.Filter = "EZO file (*.ezo)|*.ezo";
             if (saveFileDialog.ShowDialog() == true)
             {
-                StringBuilder exportFileContent = new StringBuilder();
-                foreach (var x in container.Children)
-                {
-                    string daySchedule="-", hour="-", minute="-", ampm = "-";
-                    if (exportFileContent.Length > 0) exportFileContent.Append("\n");
-                    exportFileContent.Append("|").Append(((ComboBoxItem)((WorkItemControl)x).typeCB.SelectedItem).Content.ToString());
-                    exportFileContent.Append("|").Append(((WorkItemControl)x).ItemPath.Text);
-                    exportFileContent.Append("|").Append(((ComboBoxItem)((WorkItemControl)x).windowStateCB.SelectedItem).Content.ToString());
-                    exportFileContent.Append("|").Append(((ComboBoxItem)((WorkItemControl)x).monitorCB.SelectedItem).Content.ToString());
-                    daySchedule = ((ComboBoxItem)((WorkItemControl)x).dayScheduleCB.SelectedItem).Content.ToString();
-                    exportFileContent.Append("|").Append(daySchedule);
-                    if (daySchedule != "Run at start" && daySchedule != "No schedule")
-                    {
-                        hour = ((ComboBoxItem)((WorkItemControl)x).hourCB.SelectedItem).Content.ToString();
-                        minute = ((ComboBoxItem)((WorkItemControl)x).minuteCB.SelectedItem).Content.ToString();
-                        ampm = ((ComboBoxItem)((WorkItemControl)x).ampmCB.SelectedItem).Content.ToString();
-                    }
-                    exportFileContent.Append("|").Append(hour);
-                    exportFileContent.Append("|").Append(minute);
-                    exportFileContent.Append("|").Append(ampm);
-                }
-                fileio.File.WriteAllText(saveFileDialog.FileName, exportFileContent.ToString());
+                writeEZOFile(saveFileDialog.FileName);
             }   
+        }
+
+        private void writeEZOFile(string fileNameAndLocation)
+        {
+            StringBuilder exportFileContent = new StringBuilder();
+            foreach (var x in container.Children)
+            {
+                string daySchedule = "-", hour = "-", minute = "-", ampm = "-";
+                if (exportFileContent.Length > 0) exportFileContent.Append("\n");
+                exportFileContent.Append("|").Append(((ComboBoxItem)((WorkItemControl)x).typeCB.SelectedItem).Content.ToString());
+                exportFileContent.Append("|").Append(((WorkItemControl)x).ItemPath.Text);
+                exportFileContent.Append("|").Append(((ComboBoxItem)((WorkItemControl)x).windowStateCB.SelectedItem).Content.ToString());
+                exportFileContent.Append("|").Append(((ComboBoxItem)((WorkItemControl)x).monitorCB.SelectedItem).Content.ToString());
+                daySchedule = ((ComboBoxItem)((WorkItemControl)x).dayScheduleCB.SelectedItem).Content.ToString();
+                exportFileContent.Append("|").Append(daySchedule);
+                if (daySchedule != "Run at start" && daySchedule != "No schedule")
+                {
+                    hour = ((ComboBoxItem)((WorkItemControl)x).hourCB.SelectedItem).Content.ToString();
+                    minute = ((ComboBoxItem)((WorkItemControl)x).minuteCB.SelectedItem).Content.ToString();
+                    ampm = ((ComboBoxItem)((WorkItemControl)x).ampmCB.SelectedItem).Content.ToString();
+                }
+                exportFileContent.Append("|").Append(hour);
+                exportFileContent.Append("|").Append(minute);
+                exportFileContent.Append("|").Append(ampm);
+            }
+            System.IO.Directory.CreateDirectory(fileio.Path.GetDirectoryName(fileNameAndLocation));
+            fileio.File.WriteAllText(fileNameAndLocation, exportFileContent.ToString());
         }
 
         private void shortcutButton_Click(object sender, RoutedEventArgs e)
@@ -379,14 +444,14 @@ namespace EZInnocathon
             }
         }
 
-        private void importActionButton_Click(object sender, RoutedEventArgs e)
+        private void importEZOFile(string fileAndLocation)
         {
             try
             {
-                if (ImportTextBox.Text.Substring(ImportTextBox.Text.Length - 4).ToUpper() == ".EZO")
+                if (fileAndLocation.Substring(fileAndLocation.Length - 4).ToUpper() == ".EZO")
                 {
                     string readContents;
-                    using (fileio.StreamReader streamReader = new fileio.StreamReader(ImportTextBox.Text))
+                    using (fileio.StreamReader streamReader = new fileio.StreamReader(fileAndLocation))
                     {
                         readContents = streamReader.ReadToEnd();
                     }
@@ -410,7 +475,7 @@ namespace EZInnocathon
 
                         idx++;
                     }
-                    countNormalItem.Text = (contents.Count()).ToString();
+                    countItems();
                 }
                 else
                 {
@@ -421,6 +486,11 @@ namespace EZInnocathon
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void importActionButton_Click(object sender, RoutedEventArgs e)
+        {
+            importEZOFile(ImportTextBox.Text);
         }
     }
 

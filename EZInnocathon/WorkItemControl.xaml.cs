@@ -14,11 +14,13 @@ namespace EZInnocathon
     /// </summary>
     public partial class WorkItemControl : UserControl
     {
-        public DateTime schedule;                
-
+        public DateTime schedule;
+        public MainWindow mainEZO;
         public WorkItemControl()
         {
             InitializeComponent();
+            mainEZO = (MainWindow)Application.Current.MainWindow;
+
             hideScheduleControl(dayScheduleCB.SelectedIndex);
             setDefault();
             buildCalendar(dayScheduleCB.SelectedIndex, hourCB.SelectedIndex, minuteCB.SelectedIndex, ampmCB.SelectedIndex);
@@ -55,7 +57,11 @@ namespace EZInnocathon
                 case 8: schedule = Convert.ToDateTime(friday, culture); break;
                 case 9: schedule = Convert.ToDateTime(saturday, culture); break;
                 case 10: schedule = Convert.ToDateTime(sunday, culture); break;
-            }            
+            }
+
+            //because buildCalendar is called upon cb changed, will put this here
+            mainEZO.writeEZODefault();
+
         }
 
         public void setDefault()
@@ -86,7 +92,8 @@ namespace EZInnocathon
                     (window as MainWindow).countNormalItem.Text = (countItem - 1).ToString();
                 }
             }
-            
+
+            mainEZO.writeEZODefault();            
         }
 
         public void hideScheduleControl(int daySchedule)
@@ -120,17 +127,21 @@ namespace EZInnocathon
                     this.browseButton.Opacity = 1.0;
                     break;
             }
+
+            mainEZO.writeEZODefault();
+
         }
 
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
             string target = this.ItemPath.Text.ToString();
             string state = ((ComboBoxItem)(((WorkItemControl)this).windowStateCB).SelectedItem).Content.ToString();
+            string type = ((ComboBoxItem)(((WorkItemControl)this).typeCB).SelectedItem).Content.ToString();
 
-            runWorkItem(target, state);
+            runWorkItem(target, state, type);
         }
 
-        public void runWorkItem(string target, string state)
+        public void runWorkItem(string target, string state, string type)
         {
             try
             {
@@ -147,7 +158,16 @@ namespace EZInnocathon
                         theProcess.WindowStyle = ProcessWindowStyle.Minimized;
                         break;
                 }
-                Process.Start(theProcess);
+
+                if (type != "Message")
+                {
+                    Process.Start(theProcess);
+                }
+                else
+                {
+                    //property FileName of process containing the string message
+                    MessageBox.Show(theProcess.FileName);
+                }
             }
             catch (Exception w)
             {
@@ -174,8 +194,7 @@ namespace EZInnocathon
             }
 
             buildCalendar(dayScheduleCB.SelectedIndex, hourCB.SelectedIndex, minuteCB.SelectedIndex, ampmCB.SelectedIndex);
-
-
+            mainEZO.countItems();
         }
 
         private void browseButton_Click(object sender, RoutedEventArgs e)
@@ -244,6 +263,9 @@ namespace EZInnocathon
             soundPlayer.Play();
         }
 
-
+        private void ItemPath_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            mainEZO.writeEZODefault();
+        }
     }
 }
