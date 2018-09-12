@@ -24,8 +24,6 @@ namespace EZInnocathon
     {
         StackPanel container;
         DispatcherTimer timer1;
-        int NormalItemTotal;
-        int SchedItemTotal;
 
         public MainWindow()
         {
